@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HouseBeat</title>
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script>
+  // Apply the theme before the first paint to avoid a flash
+  (function () {
+    const forced = new URLSearchParams(location.search).get('theme') || localStorage.getItem('hb-theme') || 'auto';
+    const dark = forced === 'dark' || (forced === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  })();
+</script>
+</head>
+<body>
+<header>
+  <img src="logo.svg" alt="">
+  <div>
+    <h1>HouseBeat<span class="version" id="version"></span></h1>
+    <div class="sub" data-i18n="tagline"></div>
+  </div>
+  <div class="prefs">
+    <label for="theme" data-i18n="theme"></label>
+    <select id="theme">
+      <option value="auto" data-i18n="themeAuto"></option>
+      <option value="light" data-i18n="themeLight"></option>
+      <option value="dark" data-i18n="themeDark"></option>
+    </select>
+    <label for="lang" data-i18n="language"></label>
+    <select id="lang">
+      <option value="auto" data-i18n="langAuto"></option>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+  </div>
+</header>
+
+<div class="bar">
+  <button id="active"></button>
+  <span class="meta" style="margin-left:8px">🔊 <span data-i18n="masterVolume"></span>:</span>
+  <input type="range" id="master" min="0" max="100" style="width:220px">
+  <span class="meta" id="masterv"></span>
+</div>
+<div class="bar">
+  <button id="click" data-i18n="testBeep" data-i18n-title="testBeepTitle"></button>
+  <button id="autosync" data-i18n="autoSync" data-i18n-title="autoSyncTitle"></button>
+  <button id="discover" data-i18n="search"></button>
+  <span class="meta" style="margin-left:12px" data-i18n="mode"></span>
+  <button id="sync" data-i18n="modeSync" data-i18n-title="modeSyncTitle"></button>
+  <button id="direct" data-i18n="modeDirect" data-i18n-title="modeDirectTitle"></button>
+  <button id="quit" class="spacer" data-i18n="quit" data-i18n-title="quitTitle"></button>
+</div>
+
+<div class="banner" id="offBanner" data-i18n="offBanner" hidden></div>
+<div class="banner" id="noVirtual" data-i18n-html="noVirtual" hidden></div>
+
+<div class="grid" id="cards"></div>
+
+<div class="help" data-i18n-html="help"></div>
+<pre id="log"></pre>
+
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
